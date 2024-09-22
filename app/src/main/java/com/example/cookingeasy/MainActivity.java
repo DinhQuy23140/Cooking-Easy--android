@@ -1,5 +1,6 @@
 package com.example.cookingeasy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -15,8 +16,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.cookingeasy.fragment.AboutFragment;
 import com.example.cookingeasy.fragment.HomeFragment;
+import com.example.cookingeasy.fragment.PersonFragment;
+import com.example.cookingeasy.fragment.SearchFragment;
 import com.example.cookingeasy.fragment.SettingsFragment;
 import com.example.cookingeasy.fragment.ShareFragment;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -32,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 //            return insets;
 //        });
+
+        //navigation drawer
 
         getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
             @Override
@@ -63,6 +70,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_home);
         }
+
+
+        //bottom navigation
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
+        bottomNavigationView.setSelectedItemId(R.id.bottom_home);
+        bottomNavigationView.setOnItemSelectedListener(item->{
+            if(item.getItemId() == R.id.bottom_home){
+                return true;
+            } else if (item.getItemId() == R.id.bottom_search) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment()).commit();
+                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+            } else if(item.getItemId() == R.id.bottom_settings) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
+                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+            }
+            else {
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PersonFragment()).commit();
+                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+            }
+            return false;
+        });
 
     }
 
