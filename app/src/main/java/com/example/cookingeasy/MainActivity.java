@@ -82,13 +82,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             } else if (item.getItemId() == R.id.bottom_search) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment()).commit();
                 overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                return true;
             } else if(item.getItemId() == R.id.bottom_settings) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
                 overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                return true;
             }
-            else {
+            else if(item.getItemId() == R.id.bottom_person) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new PersonFragment()).commit();
                 overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                return true;
             }
             return false;
         });

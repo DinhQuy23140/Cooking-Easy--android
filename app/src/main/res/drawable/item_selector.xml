@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_selected="true"
-        android:color="@color/white"/>
+    <!-- Item này sẽ áp dụng khi thành phần ở trạng thái được chọn (selected) -->
+    <item android:state_checked ="true"
+        android:color="@color/white" />
 
-    <item android:state_selected="false"
-        android:color="@color/grey"/>
-
+    <!-- Item này sẽ áp dụng khi thành phần không được chọn -->
+    <item android:state_checked ="false"
+        android:color="@color/grey" />
 </selector>
