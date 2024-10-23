@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.cookingeasy.fragment.AboutFragment;
 import com.example.cookingeasy.fragment.HomeFragment;
@@ -66,22 +68,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        if (savedInstanceState == null){
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_home);
-        }
+//        if (savedInstanceState == null){
+//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new HomeFragment()).commit();
+//            navigationView.setCheckedItem(R.id.nav_home);
+//        }
 
 
         //bottom navigation
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigation);
         bottomNavigationView.setSelectedItemId(R.id.bottom_home);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_container, new HomeFragment()).commit();
+        overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+        fragmentTransaction.addToBackStack(null);
         bottomNavigationView.setOnItemSelectedListener(item->{
             if(item.getItemId() == R.id.bottom_home){
+                FragmentTransaction replaceFragment = fragmentManager.beginTransaction();
+                replaceFragment.replace(R.id.fragment_container, new HomeFragment()).commit();
+                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                replaceFragment.addToBackStack(null);
                 return true;
             } else if (item.getItemId() == R.id.bottom_search) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment()).commit();
+//                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SearchFragment()).commit();
+//                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                FragmentManager replaceFragment = getSupportFragmentManager();
+                FragmentTransaction transaction = replaceFragment.beginTransaction();
+                transaction.replace(R.id.fragment_container, new SearchFragment()).commit();
                 overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                fragmentTransaction.addToBackStack(null);
                 return true;
             } else if(item.getItemId() == R.id.bottom_settings) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new SettingsFragment()).commit();
